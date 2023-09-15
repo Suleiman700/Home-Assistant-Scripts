@@ -1,0 +1,16 @@
+- id: "1694726405244"
+  alias: Failed login notification
+  description: Send notification to the mobile app when detects wrong login attempt
+  trigger:
+    - platform: persistent_notification
+      update_type:
+        - added
+  condition:
+    - condition: template
+      value_template: "{{ 'Login attempt' in trigger.notification.title }}"
+  action:
+    - service: notify.notify
+      data_template:
+        title: Failed login
+        message: "{{ trigger.notification.message }}"
+  mode: single
